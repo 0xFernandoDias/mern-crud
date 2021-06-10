@@ -5,18 +5,28 @@ const app = express()
 // MongoDB connection
 const mongoose = require('mongoose')
 
-// Model/ Schema imports
-const FriendModel = require('./models/Friends')
+// Cors does the connection between the Client and the Server
+const cors = require('cors')
+
+app.use(cors())
+app.use(express.json())
 
 // DB connection
 mongoose.connect('mongodb+srv://dbUser:password12345@cluster0.mdav7.mongodb.net/mern-database?retryWrites=true&w=majority',
 { useNewUrlParser: true, useUnifiedTopology: true  })
 
-// When we go to "localhost:3001/insert" that function below we'll be called
-app.get('/insert', async (req, res) => {
-    const friend = new FriendModel({name: "John", age: 50}) // "object" as arguments for the class constructor
+// Model/ Schema imports
+const FriendModel = require('./models/Friends')
+
+// When we go to "localhost:3001/insert (localhost:3001/addFriend)" that function below we'll be called
+app.post('/addfriend', async (req, res) => { // req = down, res = up
+
+    const name = req.body.name // req.body = "axios.post(link, {name, age})"
+    const age = req.body.age
+
+    const friend = new FriendModel({name , age}) // "object" as arguments for the class constructor
     await friend.save() // it stores the data in db
-    res.send("Inserted DATA") // browser's message 
+    res.send("Success") // browser's message
 })
 
 // When we go to "localhost:3001/read" that function below we'll be called

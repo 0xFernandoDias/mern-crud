@@ -2,6 +2,54 @@
   box-sizing: content-box;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.whole-form {
+  height: 430px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-style {
+  background-color: #93fe83;
+  width: 30%;
+  height: 70%;
+  display: flex;
+  border-radius: 7%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.h1-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.whole-form input {
+  display: flex;
+  width: 95%;
+  height: 35px;
+  font-size: 18px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.enter-button {
+  margin-top: 3%;
 }
