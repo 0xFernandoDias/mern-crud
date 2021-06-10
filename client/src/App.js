@@ -8,17 +8,37 @@ const App = () => {
   const [name, setName] = useState("")
   const [age, setAge] = useState(0)
   const [list, setList] = useState([])
+  const [showList, setShowList] = useState(false)
 
   const addFriend = () => {
     Axios.post('http://localhost:3001/addfriend', {
       name: name,
       age: age
-    }).then(() => alert("It worked!")).catch(() => alert("It didn't work..."))
+    }).then(() => alert("It was added with success")).catch(() => alert("It didn't work..."))
+  }
+
+  const updateFriend = (id) => {
+    const newName = prompt("Enter new name")
+    const newAge = prompt("Enter new age")
+
+    Axios.put('http://localhost:3001/update', { newName: newName, newAge: newAge, id: id })
+}
+
+  const binaryOption = () => {
+    if (showList === false) {
+      setShowList(true)
+    } else {
+      setShowList(false)
+    }
   }
 
   useEffect(() => {
     Axios.get('http://localhost:3001/read').then((res) => setList(res.data)).catch(() => console.log("Error"))
   }, [list])
+
+  const deleteFriend = (id) => {
+    Axios.delete(`http://localhost:3001/delete/${id}`)
+}
 
   return (
     <div className="App">
@@ -47,18 +67,27 @@ const App = () => {
             />
           </div>
 
+        <div className="buttons">
           <button type="button"
-            className="enter-button btn btn-secondary"
+            className="enter-button btn btn-dark"
             onClick={addFriend}
           >
             Add Friend
           </button>
 
+          <button type="button"
+            className="enter-button btn btn-secondary"
+            onClick={() => binaryOption()}
+          >
+            {showList ? "Hide the list" : "See the list"}
+          </button>
+        </div>
+
         </form>
       </div>
 
-      <List className="list-style" array={list} />
-      
+      <List className="list-style" array={list} showList={showList} upd={updateFriend} del={deleteFriend}/>
+
     </div>
   )
 }

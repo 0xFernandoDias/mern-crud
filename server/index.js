@@ -41,4 +41,26 @@ app.get('/read', async(req, res) => {
     })
 })
 
+app.put('/update', async(req, res) => {
+    const newName = req.body.newName
+    const newAge = req.body.newAge
+    const id = req.body.id
+
+    try {
+        await FriendModel.findById(id, (error, friendToUpdate) => {
+            friendToUpdate.name = newName
+            friendToUpdate.age = Number(newAge)
+
+            friendToUpdate.save()
+        })}catch(err){
+            console.log(err)
+        }
+})
+
+app.delete('/delete/:id', async (req, res) => {
+    const id = req.params.id
+    await FriendModel.findByIdAndRemove(id).exec()
+    res.send("Item deleted")
+})
+
 app.listen(3001, () => console.log(`You're connected!`)) // node "listen" the "localhost:3001" and then shows "You're connected!" on output if everything is okay
