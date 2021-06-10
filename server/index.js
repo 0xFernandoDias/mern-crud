@@ -18,12 +18,13 @@ mongoose.connect('mongodb+srv://dbUser:password12345@cluster0.mdav7.mongodb.net/
 // Model/ Schema imports
 const FriendModel = require('./models/Friends')
 
-// When we go to "localhost:3001/insert (localhost:3001/addFriend)" that function below we'll be called
+// When we go to "localhost:3001/insert (localhost:3001/addfriend)" that function below we'll be called
 app.post('/addfriend', async (req, res) => { // req = down, res = up
-
+    // server
     const name = req.body.name // req.body = "axios.post(link, {name, age})"
     const age = req.body.age
 
+    // db
     const friend = new FriendModel({name , age}) // "object" as arguments for the class constructor
     await friend.save() // it stores the data in db
     res.send("Success") // browser's message
